@@ -36,7 +36,7 @@ function Header({ ...props }) {
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
           <Button color="transparent" href="#" className={classes.title}>
-            {makeBrand()}
+            {makeBrand()}"asdfasdf"// 디바이스 위치 넣기
           </Button>
         </div>
         <Hidden smDown implementation="css">

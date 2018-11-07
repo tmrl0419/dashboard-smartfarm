@@ -17,17 +17,20 @@ import dashboardRoutes from "routes/dashboard.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
+import logo from "assets/img/smart_farm.png";
+import Dashboard from "../../views/Dashboard/Dashboard";
 
 const switchRoutes = (
   <Switch>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
-        return <Redirect from={prop.path} to={prop.to} key={key} />;
-      return <Route path={prop.path} component={prop.component} key={key} />;
+        return <Redirect from={prop.path} to={prop.to} key={key}/>;
+      return <Route path={prop.path} component={prop.component} key={key}/>;
     })}
   </Switch>
 );
+
+
 
 class App extends React.Component {
   constructor(props) {
@@ -71,7 +74,7 @@ class App extends React.Component {
       <div className={classes.wrapper}>
         <Sidebar
           routes={dashboardRoutes}
-          logoText={"Creative Tim"}
+          logoText={"Smart Farm"}
           logo={logo}
           image={image}
           handleDrawerToggle={this.handleDrawerToggle}

@@ -11,14 +11,18 @@ var delays = 80,
 var delays2 = 80,
   durations2 = 500;
 
+
 // ##############################
 // // // Daily Sales
 // #############################
 
+
+// sensor 테이블에서 데이터 들고오기
+// s
 const dailySalesChart = {
   data: {
-    labels: ["M", "T", "W", "T", "F", "S", "S"],
-    series: [[12, 17, 7, 17, 23, 18, 38]]
+    labels: ["M", "T", "W", "T", "F", "S", "S","M", "T", "W", "T", "F", "S", "S"],
+    series: [[12, 17, 7, 17, 23, 18, 38, 12, 17, 7, 17, 23, 18, 38]]
   },
   options: {
     lineSmooth: Chartist.Interpolation.cardinal({
