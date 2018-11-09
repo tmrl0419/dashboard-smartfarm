@@ -16,51 +16,29 @@ import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 class Datacard extends React.Component {
-  constructor(props){
-    super(props);
-    console.log(this.props.facility);
-    var onOff = this.props.facility;
-  }
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  handleChangeIndex = index => {
-    this.setState({ value: index });
+  state = {
+    onOff:this.props.onOff
   };
 
   handleChange = () => event => {
-    if (this.onOff === true) {
-      console.log(this.onOff);
-      this.onOff = false;
-      // fetch("https://ip:port/facility/", {  
-      //   method: "POST",
-      //   headers: {
-      //     "Accept": "application/json",
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify({
-      //     firstParam: "yourValue",
-      //     secondParam: "yourOtherValue"
-      //   })
-      // });
-    } else{
-      console.log(this.onOff);
-      this.onOff = true;
-      // fetch("https://mywebsite.com/endpoint/", {
-      //   method: "POST",
-      //   headers: {
-      //     "Accept": "application/json",
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify({
-      //     firstParam: "yourValue",
-      //     secondParam: "yourOtherValue"
-      //   })
-      // });
-    }
+    this.setState({
+      onOff: !this.state.onOff
+    });
+    this.updateFile();
   };
+
+  async updateFile(fileName, content) {
+    var url = "http://10.251.100.101:8888/";
+    url = url.concat(this.props.controller.toLowerCase());
+    console.log(url);
+    if(this.state.onOff === true){
+      url = url.concat("/0");
+      fetch(url);
+    } else {
+      url = url.concat("/1");
+      fetch(url);
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -82,15 +60,12 @@ class Datacard extends React.Component {
                 <Warning />
               </Danger>
               <a href="#pablo" onClick={e => e.preventDefault()}>
-                {this.props.advice}
+                바깥날씨와 비교?
               </a>
             </div>
             <FormControlLabel
               control={
-                <Switch
-                  value="checkedA"
-                  onChange={this.handleChange()}
-                />
+                <Switch checked={this.state.onOff} onChange={this.handleChange()} />
               }
               label={this.props.controller}
             />

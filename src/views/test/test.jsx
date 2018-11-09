@@ -6,7 +6,7 @@ const user = "UserID";
 
 class test extends Component {
   render() {
-    return <Dashboard DeviceID={device} UserID={user} />;
+    return <Dashboard DeviceID={device} UserID={user} location={"부산"} />;
   }
 }
 

@@ -27,10 +27,15 @@ class Dashboard extends React.Component {
     DeviceID: this.props.DeviceID,
     AmbientTemp: 0,
     Humidity: 0,
-    Lux: 0
-    // advice_temp:"hot",
-    // advice_
+    Lux: 0,
+    Fan: false,
+    LED: false,
+    HeatingPad: false
   };
+
+  LED = false;
+  Fan = false;
+  HeatingPad = false;
 
   componentWillMount() {
     console.log("WILLMOUNT");
@@ -41,7 +46,7 @@ class Dashboard extends React.Component {
   componentDidMount() {
     setInterval(() => {
       this.socketSend();
-    }, 60000);
+    }, 6000);
   }
 
   socketRecive = () => {
@@ -51,6 +56,9 @@ class Dashboard extends React.Component {
       data.AmbientTemp = parseFloat(data.AmbientTemp).toFixed(1);
       data.Humidity = parseFloat(data.Humidity).toFixed(1);
       data.Lux = parseFloat(data.Lux).toFixed(0);
+      this.Fan = data.Fan;
+      this.LED = data.LED;
+      this.HeatingPad = data.HeatingPad;
       this.setState({
         AmbientTemp: data.AmbientTemp,
         Humidity: data.Humidity,
@@ -61,8 +69,22 @@ class Dashboard extends React.Component {
 
   socketSend = () => {
     socket.emit("requestData", { deviceID: this.state.DeviceID });
-    console.log("Function");
   };
+
+
+
+  // async updateFile(fileName, content) {
+  //   const url = http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib;
+
+  //   const doneResponse = await fetch(url, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: postBody
+  //   });
+  // }
 
   render() {
     const { classes } = this.props;
@@ -77,8 +99,8 @@ class Dashboard extends React.Component {
             advice="덥다"
             color="warning"
             icon="wb_sunny"
-            controller="Heating Pad"
-            facility={true}
+            controller="HeatingPad"
+            onOff={this.HeatingPad}
           />
           <DataCard
             classes={classes}
@@ -89,7 +111,7 @@ class Dashboard extends React.Component {
             color="success"
             icon="opacity"
             controller="Fan"
-            facility={true}
+            onOff={this.Fan}
           />
           <DataCard
             classes={classes}
@@ -99,12 +121,19 @@ class Dashboard extends React.Component {
             advice="빛좀주라"
             color="danger"
             icon="wb_incandescent"
-            controller="Light"
-            facility={true}
+            controller="LED"
+            onOff={this.LED}
           />
         </GridContainer>
         <GridContainer>
-          <Drawer />
+          <Drawer
+            tempHigh={40}
+            tempLow={20}
+            humidityHigh={40}
+            humidityLow={20}
+            lightHigh={40}
+            lightLow={20}
+          />
         </GridContainer>
         <GridContainer>
           <GraphCard

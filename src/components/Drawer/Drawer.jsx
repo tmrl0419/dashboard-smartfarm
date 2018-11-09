@@ -59,10 +59,20 @@ const styles = theme => ({
   },
 });
 
+
+
 function DetailedExpansionPanel(props) {
   const { classes } = props;
   const createSliderWithTooltip = Slider.createSliderWithTooltip;
   const Range = createSliderWithTooltip(Slider.Range);
+  var tempHigh = props.tempHigh;
+  var tempLow = props.tempLow;
+  var humidityHigh= props.humidityHigh;
+  var humidityLow= props.humidityLow;
+  var lightHigh= props.lightHigh;
+  var lightLow= props.lightLow;
+  console.log(tempHigh,tempLow,humidityHigh,humidityLow,lightHigh,lightLow);
+
   return (
     <div className={classes.root}>
       <ExpansionPanel>
@@ -77,34 +87,49 @@ function DetailedExpansionPanel(props) {
         <ExpansionPanelDetails className={classes.details}>
           <div className={classes.slide}>
             <Typography className={classes.texting}>Temperature</Typography>
-            <Range min={0} max={100} defaultValue={[20, 40]} allowCross />
+            <Range
+              min={0}
+              max={100}
+              defaultValue={[20, 40]}
+              allowCross
+              onChange={newVal => {
+                tempLow = newVal[0];
+                tempHigh = newVal[1];
+              }}
+            />
           </div>
           <div className={classes.slide}>
             <Typography className={classes.heading}>Humidity</Typography>
-            <Range min={0} max={100} defaultValue={[20, 40]} allowCross />
+            <Range
+              min={0}
+              max={100}
+              defaultValue={[20, 40]}
+              allowCross
+              onChange={newVal => {
+                humidityLow = newVal[0];
+                humidityHigh = newVal[1];
+              }}
+            />
           </div>
           <div className={classes.slide}>
           <Typography className={classes.heading}>Light</Typography>
-            <Range min={0} max={100} defaultValue={[20, 40]} allowCross />
+            <Range
+              min={0}
+              max={100}
+              defaultValue={[20, 40]}
+              allowCross
+              onChange={newVal => {
+                lightLow = newVal[0];
+                lightHigh = newVal[1];
+              }}
+            />
           </div>
-          {/* <div className={classes.column} />
-          <div className={classes.column}>
-            <Chip label="Barbados" className={classes.chip} onDelete={() => {}} />
-          </div> */}
-          {/* <div className={classNames(classes.column, classes.helper)}>
-            <Typography variant="caption">
-              Select your destination of choice
-              <br />
-              <a href="#sub-labels-and-columns" className={classes.link}>
-                Learn more
-              </a>
-            </Typography>
-          </div> */}
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions>
           <Button size="small">Cancel</Button>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary"
+            onClick={() =>console.log(tempHigh,tempLow,humidityHigh,humidityLow,lightHigh,lightLow)}>
             Save
           </Button>
         </ExpansionPanelActions>
@@ -112,9 +137,5 @@ function DetailedExpansionPanel(props) {
     </div>
   );
 }
-
-DetailedExpansionPanel.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(DetailedExpansionPanel);
